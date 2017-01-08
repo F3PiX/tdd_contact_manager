@@ -28,6 +28,12 @@ RSpec.describe Person, type: :model do
   #   expect(person).to be_valid
   # end
 
+  # Adding Phone Numbers TDD style
+
+  it 'has an array of phone numbers' do
+    expect(person.phone_numbers).to eq([])
+  end
+
 
 
 
