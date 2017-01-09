@@ -21,6 +21,10 @@ RSpec.describe Person, type: :model do
      expect(person).not_to be_valid
    end
 
+  it 'returns a persons\s full name as a string' do
+    expect(person.name).to eq('Johan Cruyff')
+  end
+
   # I don't need this test, because the shared person is a valid instance
   # it 'is valid with a first  and a last name' do
   #   # skip
@@ -33,11 +37,4 @@ RSpec.describe Person, type: :model do
   it 'has an array of phone numbers' do
     expect(person.phone_numbers).to eq([])
   end
-
-
-
-
-
-
-
-  end
+end

@@ -23,12 +23,17 @@ RSpec.describe PhoneNumbersController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # PhoneNumber. As you add validations to PhoneNumber, be sure to
   # adjust the attributes here as well.
+
+  let!(:max_d) do
+    Person.create(first_name: 'Max', last_name: 'Delius')
+  end
+
   let(:valid_attributes) {
-    { number: 'abcdexfd', person_id: 5 }
+    { number: 'abcdexfd', person_id: max_d.id }
   }
 
   let(:invalid_attributes) {
-    { number: nil, person_id: "maud"}
+    { number: nil, person_id: nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -69,6 +74,10 @@ RSpec.describe PhoneNumbersController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+
+      let(:johan) { Person.create(first_name: 'Johan', last_name: 'Cruyffie') }
+      let(:valid_attributes) { {number: '020-1234567', person_id: johan.id} }
+
       it "creates a new PhoneNumber" do
         expect {
           post :create, params: {phone_number: valid_attributes}, session: valid_session
@@ -102,8 +111,10 @@ RSpec.describe PhoneNumbersController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
+      let(:pietje) { Person.create(first_name: 'Pietje', last_name: 'Precies') }
+      let(:valid_attributes) { {number: '020-9876543', person_id: pietje.id} }
       let(:new_attributes) {
-        { number: "newnumber", person_id: 321 }
+        { number: "newnumber", person_id: pietje.id }
       }
 
       it "updates the requested phone_number" do
@@ -112,7 +123,7 @@ RSpec.describe PhoneNumbersController, type: :controller do
         phone_number.reload
         # skip("Add assertions for updated state")
         expect(phone_number.number).to eq 'newnumber'
-        expect(phone_number.person_id).to eq 321
+        expect(phone_number.person_id).to eq 2
       end
 
       it "assigns the requested phone_number as @phone_number" do
